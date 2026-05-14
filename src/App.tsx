@@ -71,7 +71,9 @@ export const App = () => {
 
       <form action="/api/todos" method="POST" onSubmit={handleSubmit}>
         <div className="field">
+          <label htmlFor="titleInput">Title: </label>
           <input
+            id="titleInput"
             type="text"
             data-cy="titleInput"
             value={title}
@@ -82,7 +84,9 @@ export const App = () => {
         </div>
 
         <div className="field">
+          <label htmlFor="userSelect">Chose the User </label>
           <select
+            id="userSelect"
             data-cy="userSelect"
             value={choseUser}
             onChange={handleChoseUser}
