@@ -6,6 +6,13 @@ import todosFromServer from './api/todos';
 import React, { useState } from 'react';
 
 export const App = () => {
+  const preparedTodo = todosFromServer.map(todo => {
+    return {
+      ...todo,
+      user: usersFromServer.find(user => user.id === todo.userId)!,
+    };
+  });
+
   const [title, setTitle] = useState('');
   const [isTitleError, setIsTitleError] = useState(false);
 
@@ -22,7 +29,7 @@ export const App = () => {
     setIsChoseUserError(false);
   };
 
-  const [tasks, setCurrentTasks] = useState(todosFromServer);
+  const [tasks, setCurrentTasks] = useState(preparedTodo);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -31,6 +38,12 @@ export const App = () => {
     setIsChoseUserError(choseUser === 0);
 
     if (!title || choseUser === 0) {
+      return;
+    }
+
+    const currentUser = usersFromServer.find(user => user.id === choseUser);
+
+    if (!currentUser) {
       return;
     }
 
@@ -43,6 +56,7 @@ export const App = () => {
       title,
       completed: false,
       userId: choseUser,
+      user: currentUser,
     };
 
     setCurrentTasks(currentTasks => [...currentTasks, newTask]);

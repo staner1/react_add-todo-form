@@ -1,16 +1,14 @@
 import React from 'react';
 import { Todo } from '../../types/deal';
 import clsx from 'clsx';
-import { UserInfo } from '../UserInfo';
-import UsersFromServer from '../../api/users';
+
+import { UserInfo } from '../UserInfo/UserInfo';
 
 type Props = {
   todo: Todo;
 };
 
 export const TodoInfo: React.FC<Props> = ({ todo }) => {
-  const currentUser = UsersFromServer.find(user => user.id === todo.userId);
-
   return (
     <article
       data-id={todo.id}
@@ -18,7 +16,7 @@ export const TodoInfo: React.FC<Props> = ({ todo }) => {
     >
       <h2 className="TodoInfo__title">{todo.title}</h2>
 
-      {currentUser !== undefined && <UserInfo user={currentUser} />}
+      <UserInfo user={todo.user} />
     </article>
   );
 };
